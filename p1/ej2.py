@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 
 from smtplib import SMTP
-import sys
 
 def sendMail():
     sended = False
