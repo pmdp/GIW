@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 # -*- coding: utf-8 -*-
 
-import json
+import json, operator
 
 def semaforos():
     try:
@@ -37,16 +37,24 @@ def semaforos():
         for i in ubis:
             ubSem[i] = ubSem[i] / numSemTot
         #print ubSem
-        #cont = 0
-        #for i in ubis:
-        #    cont += ubSem[i]
-        #print cont
         #print "Número total de semáforos: ", numSemTot
         outFile = open('outputSemaforos.txt', 'w')
-        #for i in ubis:
-        #    line = i + ubSem[i] + '\n'
-        #    outFile.write(line)
-    
+        for i in ubis:    
+            linea = str(i) + " " + str(ubSem[i])
+            outFile.write(linea + "\n")
+        
+        #Apartado b -> top 10 de frecuencias        
+        outFileOrdenados = open('top10.txt', 'w')
+        #Ordena de mayor a menor el diccionario anterior devolviendo una lista
+        ubSemOrdenado = sorted(ubSem.items(), key=operator.itemgetter(1), reverse=True)
+        #Nos quedamos solo con los 10 primeros        
+        ubSemOrdenado = ubSemOrdenado[:10]
+        for i in ubSemOrdenado:
+            #Itera sobre las 10 ubicaciones con mayor frecuencia
+            #y luego multiplica su frecuencia por el número total de semáforos para
+            #obtener el número de semáforos en esa ubicación
+            outFileOrdenados.write(str(i[0]) + " " + str(int(i[1]*numSemTot)) + '\n')
+        #print ubSemOrdenado
     except: print "Hubo algún fallo"
     finally:
         semFile.close()
