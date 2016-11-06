@@ -21,7 +21,7 @@ def sendMail():
     msg = header + '\n' + msg + '\n'
     
     try:
-        srv = SMTP (server, 587)
+        srv = SMTP(server, 587)
         srv.ehlo()
         srv.starttls()
         srv.ehlo()
@@ -31,3 +31,5 @@ def sendMail():
         srv.quit()
     except:
         print "No se ha podido enviar el mensaje"
+
+sendMail()

@@ -1,9 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Wed Oct 19 14:23:23 2016
-
-@author: usuario_local
-"""
 
 import csv
 
@@ -122,5 +117,7 @@ def ejer1Apartado3 ():
                 f.write(c[0]+";"+c[1]+"\n")
                 cont = cont + 1 
     f.close()
-  
-    
+
+ejer1Apartado1()
+ejer1Apartado2()
+ejer1Apartado3()
