@@ -68,9 +68,9 @@ def getAllPosts(url, year=None, getPostContent=False):
                 print "Guardando enlace: ", enlace
                 posts.append(enlace)
             else:
-                print "Guardando contenido del post: ", enlace
-                postt = sp.find('div', {"class": "post-body entry-content"})
-                posts[enlace]=postt.
+                #print "Guardando contenido del post: ", enlace
+                postt = sp.text
+                posts[enlace]=postt
     print "En total: ", len(posts), " enlaces."
     return posts
 
@@ -78,8 +78,13 @@ def getAllPosts(url, year=None, getPostContent=False):
 
 def searchForKeys(keys):
     posts = getAllPosts(urlBase, year='2013', getPostContent=True)
-    for post in posts:
-        print post
+    for k, v in posts.items():
+        cont = 0
+        for key in keys:
+            if  v.find(key):
+                cont+=1
+        if cont == len(keys):
+            print k
 
 ########################################_MAIN_#################################################
 try:
