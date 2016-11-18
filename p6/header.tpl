@@ -22,7 +22,6 @@
       <ul class="nav navbar-nav">
         <li><a href="/">Home</a></li>
         <li><a href="/addCar">Añadir</a></li>
-        <li><a href="/searchCar">Buscar</a></li>
         <form action='/searchCar' method='post' class="navbar-form navbar-right">
             <input type="text" class="form-control" name='texto' placeholder="Busca un coche...">
         </form>

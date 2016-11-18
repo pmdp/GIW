@@ -117,20 +117,24 @@ def addCarPost():
     consumo = request.forms.get('consumo')
     descripcion = request.forms.get('descripcion')
     foto = request.files.get('foto')
-    name, ext = os.path.splitext(foto.filename)
-    if ext not in ('.png',):
-        return getHeader() + template('addCar', msg='Extensión de archivo no permitida') + getFooter()
-    foto.save(os.getcwd() + os.sep + 'images')
+    if marca and modelo and anyo and caballos and cilindrada and combustible and consumo and descripcion and foto:
+        name, ext = os.path.splitext(foto.filename)
+        if ext not in ('.png',):
+            return getHeader() + template('addCar', msg='Extensión de archivo no permitida') + getFooter()
+        foto.save(os.getcwd() + os.sep + 'images')
 
-    db = conexionBD()
-    c = db.cursor()
-    data = (marca, modelo, anyo, caballos, cilindrada, combustible, consumo, descripcion, foto.filename)
-    c.execute('''INSERT INTO Coches (marca, modelo, anyo, caballos,
-                cilindrada, combustible, consumo, descripcion, foto)
-                VALUES (?,?,?,?,?,?,?,?,?)''', data)
-    db.commit()
-    db.close()
-    redirect('/')
+        db = conexionBD()
+        c = db.cursor()
+        data = (marca, modelo, anyo, caballos, cilindrada, combustible, consumo, descripcion, foto.filename)
+        c.execute('''INSERT INTO Coches (marca, modelo, anyo, caballos,
+                    cilindrada, combustible, consumo, descripcion, foto)
+                    VALUES (?,?,?,?,?,?,?,?,?)''', data)
+        db.commit()
+        db.close()
+        data = getCoches()
+        return getHeader() + template('dash', rows=data, title="Todos los coches del concesionario") + getFooter()
+    else:
+        return getHeader() + template('addCar', msg='Faltan campos (todos son obligatorios)') + getFooter()
 
 @post('/editCarVal')
 def editCarPost():
@@ -168,6 +172,8 @@ def deleteCar():
     c.execute('DELETE FROM Coches WHERE id = ?', (id,))
     db.commit()
     db.close()
+    data = getCoches()
+
 
 @post('/searchCar')
 def searchCarPost():
