@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+#Sixto Jansa Sanz
+#Jose Miguel Maldonado Del Pozo
+#Jorge Utrilla Olivera
 
 import urllib, os
 from BeautifulSoup import *
@@ -68,20 +71,22 @@ def getAllPosts(url, year=None, getPostContent=False):
                 print "Guardando enlace: ", enlace
                 posts.append(enlace)
             else:
-                #print "Guardando contenido del post: ", enlace
+                print "Guardando contenido del post: ", enlace
                 postt = sp.text
-                posts[enlace]=postt
+                posts[enlace] = postt
     print "En total: ", len(posts), " enlaces."
     return posts
 
 ################################################################################################
 
-def searchForKeys(keys):
-    posts = getAllPosts(urlBase, year='2013', getPostContent=True)
+def searchForWords(keys):
+    print "Las palabras clave aparecen en los siguientes posts: "
+    posts = getAllPosts(urlBase, getPostContent=True)
     for k, v in posts.items():
         cont = 0
+        v.split()
         for key in keys:
-            if  v.find(key):
+            if key in v:
                 cont+=1
         if cont == len(keys):
             print k
@@ -89,13 +94,13 @@ def searchForKeys(keys):
 ########################################_MAIN_#################################################
 try:
     print "Accediendo a: ", urlBase, '\n'
-    # ok = raw_input("Continuar descargando todas las fotos de los posts del 2016 ? si/no: ")
-    # if ok.lower() == 'si':
-    #     posts = getAllPosts(urlBase, year='2016')
-    #     for post in posts:
-    #         saveImagesFromUrl(post)
+    ok = raw_input("Continuar descargando todas las fotos de los posts del 2016 ? si/no: ")
+    if ok.lower() == 'si':
+        posts = getAllPosts(urlBase, year='2016')
+        for post in posts:
+            saveImagesFromUrl(post)
     keys = raw_input("Introduce las palabras clave a buscar en el blog: ")
-    urls = searchForKeys(keys)
+    urls = searchForWords(keys)
 
     # p = urllib.urlopen('http://trenesytiempos.blogspot.com.es/2016/10/cronicas-de-la-via-estrecha-viii-las.html')
     # soup = BeautifulSoup(p)
@@ -106,5 +111,4 @@ try:
 except Exception, e:
     print "Hubo un error: ", e
 
-#div class="post-body entry-content"
 ################################################################################################
