@@ -76,7 +76,7 @@ def do_register():
         else:
             #Si no lo hay, inserta el nuevo usuario
             c.execute('INSERT INTO Usuarios (nombre, apellidos, email, usuario, passwd) VALUES (?,?,?,?,?)', user)
-            print "Usuario registrado:", user
+            print ("Usuario registrado:", user)
             out = template('login', msgOK='Usuario registrado correctamente', msgFail='')
         db.commit()
         db.close()
