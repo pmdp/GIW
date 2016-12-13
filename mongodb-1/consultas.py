@@ -221,9 +221,10 @@ def email_birthdate():
         to_date = request.query.to
         c = db.usuarios
         # Fecha de nacimiento mayor que fromDate y menor que toDate
-        user = {'birthdate': {'$gt': from_date, '$lt': to_date}}
+        query = {'birthdate': {'$gt': from_date, '$lt': to_date}}
         # query que busca las fechas de nacimiento ordenadas por fecha de nacimiento y por _id
-        res = c.find(user, {'_id': 1, 'email': 1, 'birthdate': 1 }).sort([('birthdate', 1), ('_id', 1)])
+        # y solo proyecta los datos necesarios
+        res = c.find(query, {'_id': 1, 'email': 1, 'birthdate': 1 }).sort([('birthdate', 1), ('_id', 1)])
         data = []
         for r in res:
             user_data = []
