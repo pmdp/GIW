@@ -2,7 +2,7 @@
  
 # Sixto Jansa Sanz, 
 # Jorge Utrilla Olivera, 
-# y José Miguel Maldonado Del Pozo
+# y Jose Miguel Maldonado Del Pozo
 # declaramos que esta solución es fruto exclusivamente de nuestro trabajo personal. 
 # No hemos sido ayudados por ninguna otra persona ni hemos obtenido la solución de fuentes externas,
 # y tampoco hemos compartido nuestra solución con nadie. 
