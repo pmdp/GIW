@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
- 
-# Sixto Jansa Sanz, 
-# Jorge Utrilla Olivera, 
+
+# Sixto Jansa Sanz,
+# Jorge Utrilla Olivera,
 # y Jose Miguel Maldonado Del Pozo
-# declaramos que esta solución es fruto exclusivamente de nuestro trabajo personal. 
+# declaramos que esta solución es fruto exclusivamente de nuestro trabajo personal.
 # No hemos sido ayudados por ninguna otra persona ni hemos obtenido la solución de fuentes externas,
-# y tampoco hemos compartido nuestra solución con nadie. 
+# y tampoco hemos compartido nuestra solución con nadie.
 # Declaramos además que no hemos realizado de manera deshonesta ninguna otra actividad
 # que pueda mejorar nuestros resultados ni perjudicar los resultados de los demás.
 
@@ -16,8 +16,9 @@ from os import linesep
 mongoclient = MongoClient()
 db = mongoclient.giw
 
-#Columnas para las tablas de los ejercicios 2, 3, 4 y 5
+#Columnas para las tablas de los ejercicios 2, 3, 4, 5 y 7
 all_table_data = ['Nombre de usuario', 'e-mail', 'Página web', 'Tarjeta de crédito', 'Hash de contraseña', 'Nombre', 'Apellido', 'Dirección', 'Aficiones', 'Fecha de nacimiento']
+#Columnas para el ejercicio 6
 mid_table_data = ['id', 'e-mail', 'Fecha de nacimiento']
 
 #Función que recibe un cursor de mongo y prepara una lista para luego mostrarla por html
@@ -69,12 +70,6 @@ def validate_arguments(args_list, all_needed=False):
         #Si no lo mete en la lista de argumentos válidos
         else:
             valid_args.append(a)
-
-    # print("Lenght args: ", len(args))
-    # print("invalid arguments: ", invalid_args)
-    # print("invalid arguments length: ", len(invalid_args))
-    # print("valid arguments: ", valid_args)
-    # print("valid arguments lenght: ", len(valid_args))
 
     if len(invalid_args) != 0:
         return False, show_args_error(invalid_args)
@@ -228,8 +223,14 @@ def email_birthdate():
         # Fecha de nacimiento mayor que fromDate y menor que toDate
         user = {'birthdate': {'$gt': from_date, '$lt': to_date}}
         # query que busca las fechas de nacimiento ordenadas por fecha de nacimiento y por _id
-        res = c.find(user).sort([('birthdate', 1), ('_id', 1)])
-        data = get_results_data(res)
+        res = c.find(user, {'_id': 1, 'email': 1, 'birthdate': 1 }).sort([('birthdate', 1), ('_id', 1)])
+        data = []
+        for r in res:
+            user_data = []
+            user_data.append(r['_id'])
+            user_data.append(r['email'])
+            user_data.append(r['birthdate'])
+            data.append(user_data)
         return template('table', num_results=str(res.count()), table_titles=mid_table_data, rows=data)
     else:
         return msg
@@ -261,9 +262,9 @@ def find_country_likes_limit_sorted():
             order = -1
 
         c = db.usuarios
-        user = {'$and': [{'address.country': country}, {'likes': {'$all': gustos}}]}
+        query = {'$and': [{'address.country': country}, {'likes': {'$all': gustos}}]}
         # query que busca en funcion de un country y de los gustos ordenando por fechas de nacimiento y con limite = limit
-        res = c.find(user).sort('birthdate', int(order)).limit(int(limit))
+        res = c.find(query).sort('birthdate', int(order)).limit(int(limit))
         data = get_results_data(res)
         return template('table', num_results=str(res.count()), table_titles=all_table_data, rows=data)
     else:
