@@ -31,8 +31,8 @@ def get_results_data(c):
         userData.append(r['email'])
         userData.append(r['webpage'])
 
-        creditCardData = "Número: " + r['credit_card']['number'] + linesep
-        creditCardData += "Fecha de expiración: " + r['credit_card']['expire']['month'] + '/' + r['credit_card']['expire']['year']
+        creditCardData = u"Número: " + r['credit_card']['number'] + linesep
+        creditCardData += u"Fecha de expiración: " + r['credit_card']['expire']['month'] + '/' + r['credit_card']['expire']['year']
         userData.append(creditCardData)
 
         userData.append(r['password'])
@@ -174,7 +174,7 @@ def find_users_or():
         if surname:
             data.append({'surname': surname})
         if birth:
-            data.append({'birthdata': birth})
+            data.append({'birthdate': birth})
         c = db.usuarios
         res = c.find({'$or': data})
         data = get_results_data(res)
