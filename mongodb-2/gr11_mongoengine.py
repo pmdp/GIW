@@ -57,7 +57,7 @@ class OrderLines(EmbeddedDocument):
     item = ReferenceField(Item, required=True)
 
     def clean(self):
-        if (int(self.quantity) * float(self.price)) != float(self.total_price):
+        if (float(self.quantity) * float(self.price)) != float(self.total_price):
             raise ValidationError(u"El precio total de la línea no corresponde con el precio y el número de productos")
         if self.name != self.item.name:
             raise ValidationError(u"El nombre de la línea de prodcuto no corresponde con el nombre del producto referenciado")
@@ -68,10 +68,10 @@ class Order(Document):
     order_lines = EmbeddedDocumentListField(OrderLines, required=True)
 
     def clean(self):
-        sum = 0
+        sum = 0.0
         for ol in list(self.order_lines):
-            sum += ol.total_price
-        if self.total_price != sum:
+            sum += float(ol.total_price)
+        if float(self.total_price) != sum:
             raise ValidationError(u"El precio total del pedido no corresponde a la suma de todas sus líneas")
 
 
@@ -118,19 +118,20 @@ def insertar():
     i3.save()
     i4.save()
 
-    ol1 = OrderLines(quantity=2, price=5, name="pan", total_price=10, item=i1)
-    ol2 = OrderLines(quantity=3, price=5, name="cebolla", total_price=15, item=i2)
-    ol3 = OrderLines(quantity=1, price=2, name="oreo", total_price=2, item=i3)
-    ol4 = OrderLines(quantity=7, price=3, name="helado", total_price=21, item=i4)
+    ol1 = OrderLines(quantity=2, price=0.55, name="pan", total_price=1.1, item=i1)
+    ol2 = OrderLines(quantity=3, price=0.32, name="cebolla", total_price=0.96, item=i2)
+    ol3 = OrderLines(quantity=1, price=2.0, name="oreo", total_price=2.0, item=i3)
+    ol4 = OrderLines(quantity=7, price=3.0, name="helado", total_price=21.0, item=i4)
 
-    o1 = Order(total_price=25, order_date="2016,12,15,12,34,21,888283", order_lines=[ol1, ol2])
+    o1 = Order(total_price=2.06, order_date="2016,12,15,12,34,21,888283", order_lines=[ol1, ol2])
     o2 = Order(total_price=23, order_date="2016,12,20,12,34,21,888283", order_lines=[ol3, ol4])
-    o3 = Order(total_price=27, order_date="2016,12,20,12,34,21,888283", order_lines=[ol1, ol2, ol3])
-    o4 = Order(total_price=36, order_date="2016,12,20,12,34,21,888283", order_lines=[ol4, ol2])
+    o3 = Order(total_price=24.1, order_date="2016,12,20,12,34,21,888283", order_lines=[ol1, ol3, ol4])
+    o4 = Order(total_price=21.96, order_date="2016,12,20,12,34,21,888283", order_lines=[ol4, ol2])
     o1.save()
     o2.save()
     o3.save()
     o4.save()
+
 
     #Tarjetas de credito y Usuarios
     c1 = CreditCard(name='Pedro', number='1234567891234567', month='02', year='20', cvv='455')
@@ -144,7 +145,7 @@ def insertar():
     p.save()
     p1.save()
 
-    #Número de pedidos de Pedro antes de borrar el pedido o1
+    #Comprobación de eliminado de un pedido de la lista de un usuario al borrar dicho pedido
     print(u"Borrando pedido o1")
     nP = len(User.objects.get(name="Pedro").orders)
     print(u"Número de pedidos de Pedro antes de borrar:", nP)
