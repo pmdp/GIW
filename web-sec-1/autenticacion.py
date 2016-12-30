@@ -147,11 +147,14 @@ def login_(totp=False):
             # Verifica la contraseña pasada
             if argon2.verify(data['password'], r['password']):
                 # Si ha entrado por /login y en la BD no tiene el campo totp (login normal)
-                if not totp and not r['totp']:
-                    valid = True
-                # Si ha entrado por /login_totp y en la BD existe el campo totp y este es válido (login con totp)
-                elif totp and r['totp'] and otp.valid_totp(token=data['totp'], secret=r['totp']):
-                    valid = True
+                try:
+                    if not totp and not r['totp']:
+                        valid = True
+                    # Si ha entrado por /login_totp y en la BD existe el campo totp y este es válido (login con totp)
+                    elif totp and r['totp'] and otp.valid_totp(token=data['totp'], secret=r['totp']):
+                        valid = True
+                except KeyError:
+                    pass
         if valid:
             msg = "Bienvenido " + r['name']
             print(msg)
