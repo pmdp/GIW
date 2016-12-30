@@ -55,7 +55,6 @@ c = db.users
 
 ########################################################################################################################
 
-
 # Función que recibe una lista de campos que deberían llegar al servidor por POST
 # Valida que lo que ha llegado al servidor es lo justo y necesario (campos no requeridos, inexistentes o vacios)
 # Devuelve:
@@ -83,9 +82,8 @@ def form_data(required_fields):
 
 ########################################################################################################################
 
+
 # Método que abstrae el proceso de registro para poder usarlo sin y con TOTP
-
-
 def sign_up(totp=False):
     valid, data, msg = form_data(['nickname', 'name', 'country', 'email', 'password', 'password2'])
     if valid:
@@ -132,9 +130,9 @@ def sign_up(totp=False):
 
 ########################################################################################################################
 
+
 # Método que abstrae el proceso de login para poder usarlo sin y con TOTP
-
-
+# no deja que un usuario registrado con TOTP (existe el campo totp en la BD) se pueda loguear sin meter el token
 def login_(totp=False):
     req_fields = ['nickname', 'password']
     if totp:
