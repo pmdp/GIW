@@ -10,7 +10,7 @@ Los enunciados de las prácticas están incluidos en sus carpetas.
 - **p3**: Análisis de archivos XML.
 - **p4**: Acceso a bases de datos (SQLite).
 - **p5**: Web Scraping con beautifulsoup.
-- **p6**: Programación web con el framework bootle.
+- **p6**: Programación web con el framework bottle.
 - **mongodb-1**: Consultas con pymongo.
 - **mongodb-2**: Esquema ODM con MongoEngine.
 - **mongodb-3**: Aggregations pipelines con pymongo.
