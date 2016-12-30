@@ -148,10 +148,10 @@ def login_(totp=False):
             if argon2.verify(data['password'], r['password']):
                 # Si ha entrado por /login y en la BD no tiene el campo totp (login normal)
                 try:
-                    if not totp and not r['totp']:
+                    if not totp and not ('totp' in r.keys()):
                         valid = True
                     # Si ha entrado por /login_totp y en la BD existe el campo totp y este es válido (login con totp)
-                    elif totp and r['totp'] and otp.valid_totp(token=data['totp'], secret=r['totp']):
+                    elif totp and ('totp' in r.keys()) and otp.valid_totp(token=data['totp'], secret=r['totp']):
                         valid = True
                 except KeyError:
                     pass
