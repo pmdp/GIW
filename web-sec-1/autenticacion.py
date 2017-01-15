@@ -50,7 +50,7 @@ c = db.users
 #
 # DESVENTAJAS
 # - Al ser un algoritmo relativamente nuevo, no tiene tantos años de pruebas detrás como bcrypt, scrypt o PBKDF2
-# - Lento y hambriento de memoria, pudiendo ocupar 1GB de RAM en menos de 1/4 de segundo
+# - Hambriento de memoria, pudiendo ocupar 1GB de RAM en menos de 1/4 de segundo
 
 
 ########################################################################################################################
