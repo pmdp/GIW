@@ -56,7 +56,7 @@ c = db.users
 ########################################################################################################################
 
 # Función que recibe una lista de campos que deberían llegar al servidor por POST
-# Valida que lo que ha llegado al servidor es lo justo y necesario (campos no requeridos, inexistentes o vacios)
+# Valida que lo que ha llegado al servidor es correcto, justo y necesario (campos no requeridos, inexistentes o vacios)
 # Devuelve:
 #   Booleano : indica si ha cumplido todas las validaciones
 #   diccionario (data): con los datos recibidos
