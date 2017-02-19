@@ -12,6 +12,7 @@ Los enunciados de las prácticas están incluidos en sus carpetas.
 - **p4**: Acceso a bases de datos (SQLite).
 - **p5**: Web Scraping con beautifulsoup.
 - **p6**: Programación web con el framework bottle.
+
 #### Python 3.5
 - **mongodb-1**: Consultas con pymongo.
 - **mongodb-2**: Esquema ODM con MongoEngine.
