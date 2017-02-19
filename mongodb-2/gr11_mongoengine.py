@@ -1,14 +1,5 @@
 # -*- coding: utf-8 -*-
 
-# Sixto Jansa Sanz,
-# Jorge Utrilla Olivera,
-# y Jose Miguel Maldonado Del Pozo
-# declaramos que esta solución es fruto exclusivamente de nuestro trabajo personal.
-# No hemos sido ayudados por ninguna otra persona ni hemos obtenido la solución de fuentes externas,
-# y tampoco hemos compartido nuestra solución con nadie.
-# Declaramos además que no hemos realizado de manera deshonesta ninguna otra actividad
-# que pueda mejorar nuestros resultados ni perjudicar los resultados de los demás.
-
 from mongoengine import *
 
 db = connect('giw_mongoengine')
